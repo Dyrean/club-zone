@@ -1,5 +1,5 @@
 import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle"
-import { Lucia } from "lucia"
+import { Lucia, TimeSpan } from "lucia"
 import { sessionTable, userTable } from "../db/schema"
 
 let _lucia: Lucia<Record<string, any>, DatabaseUserAttributes> | null = null
@@ -14,6 +14,7 @@ export function useLucia() {
 		const adapter = new DrizzleSQLiteAdapter(db, sessionTable, userTable)
 
 		_lucia = new Lucia(adapter, {
+			sessionExpiresIn: new TimeSpan(2, "w"),
 			sessionCookie: {
 				attributes: {
 					secure: !import.meta.dev,

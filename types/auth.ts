@@ -1,19 +1,17 @@
-import { email, minLength, object, optional, picklist, string } from "valibot"
+import { z } from "zod"
 
-export const SignupSchema = object({
-	email: string([email("Invalid email address")]),
-	username: string([
-		minLength(2, "Username must be at least 2 characters long"),
-	]),
-	password: string([
-		minLength(8, "Password must be at least 8 characters long"),
-	]),
-	role: optional(picklist(["user", "admin"])),
+export const SignupSchema = z.object({
+	email: z.string().email({ message: "Invalid email address" }),
+	username: z.string().min(2, { message: "Username must be at least 2 characters long" }),
+	password: z.string().min(8, { message: "Password must be at least 8 characters long" }),
+	confirm: z.string().min(8, { message: "Password must be at least 8 characters long" }),
+	role: z.enum(["user", "admin"]),
+}).refine(data => data.password === data.confirm, {
+	message: "Passwords don't match",
+	path: ["confirm"], // path of error
 })
 
-export const LoginSchema = object({
-	email: string([email("Invalid email address")]),
-	password: string([
-		minLength(8, "Password must be at least 8 characters long"),
-	]),
+export const LoginSchema = z.object({
+	email: z.string().email({ message: "Invalid email address" }),
+	password: z.string().min(8, { message: "Password must be at least 8 characters long" }),
 })

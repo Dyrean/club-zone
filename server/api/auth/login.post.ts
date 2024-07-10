@@ -1,12 +1,10 @@
 import { eq } from "drizzle-orm"
 import { Argon2id } from "oslo/password"
-import { parse } from "valibot"
 import { userTable } from "~/server/db/schema"
 import { LoginSchema } from "~/types/auth"
 
 export default defineEventHandler(async (event) => {
-	const { email, password } = await readValidatedBody(event, body =>
-		parse(LoginSchema, body))
+	const { email, password } = await readValidatedBody(event, body => LoginSchema.parse(body))
 
 	const db = useDB()
 	const lucia = useLucia()

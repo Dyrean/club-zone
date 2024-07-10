@@ -22,7 +22,9 @@ export function useAuth() {
 
 			await navigateTo("/")
 		}
-		catch {}
+		catch {
+			console.error("Signup Error")
+		}
 	}
 
 	async function login(email: string, password: string) {
@@ -37,7 +39,9 @@ export function useAuth() {
 
 			await navigateTo("/")
 		}
-		catch {}
+		catch {
+			console.error("Login Error")
+		}
 	}
 
 	async function logout() {
@@ -45,7 +49,9 @@ export function useAuth() {
 			await $fetch("/api/auth/logout", { method: "POST" })
 			reloadNuxtApp()
 		}
-		catch {}
+		catch {
+			console.error("Logout Error")
+		}
 	}
 
 	return {

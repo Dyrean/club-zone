@@ -1,13 +1,10 @@
 import { Argon2id } from "oslo/password"
-import { parse } from "valibot"
 import { userTable } from "~/server/db/schema"
 import { generateRandomID } from "~/server/utils/id"
+import { SignupSchema } from "~/types/auth"
 
 export default defineEventHandler(async (event) => {
-	const { email, password, username, role } = await readValidatedBody(
-		event,
-		body => parse(SignupSchema, body),
-	)
+	const { email, password, username } = await readValidatedBody(event, body => SignupSchema.parse(body))
 
 	const db = useDB()
 	const lucia = useLucia()
@@ -21,7 +18,7 @@ export default defineEventHandler(async (event) => {
 			email,
 			hashedPassword,
 			username,
-			role,
+			role: "user",
 		})
 
 		const session = await lucia.createSession(userId, {})
