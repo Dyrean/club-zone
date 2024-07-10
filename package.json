@@ -22,7 +22,7 @@
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.1",
 		"drizzle-orm": "^0.31.4",
-		"libsql": "^0.4.0-pre.9",
+		"libsql": "^0.4.0-pre.10",
 		"lucia": "^3.2.0",
 		"lucide-vue-next": "^0.407.0",
 		"nuxt": "^3.12.3",
