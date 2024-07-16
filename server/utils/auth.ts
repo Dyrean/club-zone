@@ -20,6 +20,11 @@ export function useLucia() {
 					secure: !import.meta.dev,
 				},
 			},
+			getSessionAttributes(attributes) {
+				return {
+					ip: attributes.ip,
+				}
+			},
 			getUserAttributes(attributes) {
 				return {
 					username: attributes.username,
@@ -41,7 +46,12 @@ declare module "lucia" {
 	interface Register {
 		Lucia: ReturnType<typeof useLucia>
 		DatabaseUserAttributes: DatabaseUserAttributes
+		DatabaseSessionAttributes: DatabaseSessionAttributes
 	}
+}
+
+interface DatabaseSessionAttributes {
+	ip: string
 }
 
 interface DatabaseUserAttributes {

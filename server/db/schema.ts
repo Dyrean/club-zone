@@ -9,9 +9,6 @@ export const userTable = sqliteTable("user", {
 	email: text("email", { length: 255 }).notNull(),
 	username: text("username").notNull(),
 	hashedPassword: text("hashed_password").notNull(),
-	role: text("role", { enum: ["user", "admin"] })
-		.notNull()
-		.default("user"),
 	createdAt: integer("createdAt", { mode: "timestamp_ms" })
 		.$default(() => new Date())
 		.notNull(),
@@ -28,5 +25,6 @@ export const sessionTable = sqliteTable("session", {
 	userId: text("user_id")
 		.notNull()
 		.references(() => userTable.id),
+	ip: text("ip"),
 	expiresAt: integer("expires_at").notNull(),
 })

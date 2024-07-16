@@ -9,7 +9,13 @@ export default defineNuxtConfig({
 		},
 	},
 
-	modules: ["@nuxtjs/tailwindcss", "shadcn-nuxt", "@pinia/nuxt", "@vueuse/nuxt"],
+	modules: [
+		"@nuxtjs/tailwindcss",
+		"shadcn-nuxt",
+		"@pinia/nuxt",
+		"@vueuse/nuxt",
+		"@formkit/auto-animate",
+	],
 
 	shadcn: {
 		/**

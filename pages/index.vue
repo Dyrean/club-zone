@@ -1,11 +1,18 @@
 <script setup lang="ts">
-const route = useRoute()
+definePageMeta({
+	middleware: ["protected"],
+})
+const { user, logout } = useAuth()
 </script>
 
 <template>
 	<div>
-		<h1>Nuxt Routing set up successfully!</h1>
-		<p>Current route: {{ route.path }}</p>
-		<a href="https://nuxt.com/docs/getting-started/routing" target="_blank">Learn more about Nuxt Routing</a>
+		<h1 class="text-2xl text-gray-500 mt-8">
+			Welcome, {{ user!.username }}
+		</h1>
+		<p>Your user ID is {{ user!.id }}.</p>
+		<form @submit.prevent="logout">
+			<Button>Logout</Button>
+		</form>
 	</div>
 </template>

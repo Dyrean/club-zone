@@ -5,18 +5,18 @@ export function useAuth() {
 
 	async function signup(
 		email: string,
+		username: string,
 		password: string,
-		username?: string,
-		role?: "user" | "admin",
+		confirm: string,
 	) {
 		try {
 			await $fetch("/api/auth/signup", {
 				method: "POST",
 				body: {
 					email,
-					password,
 					username,
-					role,
+					password,
+					confirm,
 				},
 			})
 
@@ -47,7 +47,7 @@ export function useAuth() {
 	async function logout() {
 		try {
 			await $fetch("/api/auth/logout", { method: "POST" })
-			reloadNuxtApp()
+			await navigateTo("/login")
 		}
 		catch {
 			console.error("Logout Error")

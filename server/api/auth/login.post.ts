@@ -34,7 +34,9 @@ export default defineEventHandler(async (event) => {
 		})
 	}
 
-	const session = await lucia.createSession(user.id, {})
+	const ip = getRequestHeader(event, "x-forwarded-for") || ""
+
+	const session = await lucia.createSession(user.id, { ip })
 	appendHeader(
 		event,
 		"Set-Cookie",

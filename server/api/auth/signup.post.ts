@@ -16,12 +16,13 @@ export default defineEventHandler(async (event) => {
 		await db.insert(userTable).values({
 			id: userId,
 			email,
-			hashedPassword,
 			username,
-			role: "user",
-		})
+			hashedPassword,
+		}).returning({ id: userTable.id })
 
-		const session = await lucia.createSession(userId, {})
+		const ip = getRequestHeader(event, "x-forwarded-for") || ""
+
+		const session = await lucia.createSession(userId, { ip })
 		appendHeader(
 			event,
 			"Set-Cookie",
