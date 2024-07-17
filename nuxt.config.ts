@@ -15,6 +15,8 @@ export default defineNuxtConfig({
 		"@pinia/nuxt",
 		"@vueuse/nuxt",
 		"@formkit/auto-animate",
+		"nuxt-lucide-icons",
+		"nuxt-security",
 	],
 
 	shadcn: {

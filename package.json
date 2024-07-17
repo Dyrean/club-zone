@@ -30,6 +30,8 @@
 		"lucia": "^3.2.0",
 		"lucide-vue-next": "^0.408.0",
 		"nuxt": "^3.12.3",
+		"nuxt-lucide-icons": "^1.0.5",
+		"nuxt-security": "^2.0.0-rc.9",
 		"oslo": "^1.2.1",
 		"pinia": "^2.1.7",
 		"radix-vue": "^1.9.1",
