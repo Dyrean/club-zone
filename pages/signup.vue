@@ -3,6 +3,7 @@ import { toTypedSchema } from "@vee-validate/zod"
 import { useForm } from "vee-validate"
 import { vAutoAnimate } from "@formkit/auto-animate/vue"
 import { SignupSchema } from "~/types/auth"
+import { useToast } from "@/components/ui/toast/use-toast"
 
 definePageMeta({
 	layout: "auth",
@@ -15,9 +16,25 @@ const { handleSubmit } = useForm({
 })
 
 const { signup } = useAuth()
+const { toast } = useToast()
 
-const onSubmit = handleSubmit((values) => {
-	signup(values.email, values.username, values.password, values.confirm)
+const onSubmit = handleSubmit(async (values) => {
+	await signup(values.email, values.username, values.password, values.confirm).then(() => {
+		toast({
+			title: "Signup successful",
+			description: "Welcome to the club!",
+			duration: 3000,
+		})
+	}).catch((error) => {
+		console.error("Signup Error:", error)
+		const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred"
+		toast({
+			title: "Signup failed",
+			description: errorMessage,
+			variant: "destructive",
+			duration: 3000,
+		})
+	})
 })
 </script>
 

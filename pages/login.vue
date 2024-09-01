@@ -3,6 +3,7 @@ import { toTypedSchema } from "@vee-validate/zod"
 import { useForm } from "vee-validate"
 import { vAutoAnimate } from "@formkit/auto-animate/vue"
 import { LoginSchema } from "~/types/auth"
+import { useToast } from "@/components/ui/toast/use-toast"
 
 definePageMeta({
 	layout: "auth",
@@ -15,9 +16,24 @@ const { handleSubmit } = useForm({
 })
 
 const { login } = useAuth()
+const { toast } = useToast()
 
-const onSubmit = handleSubmit((values) => {
-	login(values.email, values.password)
+const onSubmit = handleSubmit(async (values) => {
+	await login(values.email, values.password).then(() => {
+		toast({
+			title: "Login successful",
+			description: "Welcome back!",
+			duration: 3000,
+		})
+	}).catch((error) => {
+		const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred"
+		toast({
+			title: "Login failed",
+			description: errorMessage,
+			variant: "destructive",
+			duration: 3000,
+		})
+	})
 })
 </script>
 

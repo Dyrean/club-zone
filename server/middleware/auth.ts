@@ -1,7 +1,8 @@
 import { verifyRequestOrigin } from "lucia"
 import type { Session, User } from "lucia"
+import type { H3Event } from "h3"
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async (event: H3Event) => {
 	const lucia = useLucia()
 	if (event.node.req.method !== "GET") {
 		const originHeader = getHeader(event, "Origin") ?? null
@@ -18,15 +19,23 @@ export default defineEventHandler(async (event) => {
 		return
 	}
 
-	const { session, user } = await lucia.validateSession(sessionId)
-	if (session && session.fresh) {
-		appendHeader(event, "Set-Cookie", lucia.createSessionCookie(session.id).serialize())
+	try {
+		const { session, user } = await lucia.validateSession(sessionId)
+		if (session && session.fresh) {
+			appendHeader(event, "Set-Cookie", lucia.createSessionCookie(session.id).serialize())
+		}
+		if (!session) {
+			appendHeader(event, "Set-Cookie", lucia.createBlankSessionCookie().serialize())
+		}
+		event.context.session = session
+		event.context.user = user
 	}
-	if (!session) {
+	catch (error) {
+		console.error("[Error] [Auth:Middleware] Error validating session", { error })
+		event.context.session = null
+		event.context.user = null
 		appendHeader(event, "Set-Cookie", lucia.createBlankSessionCookie().serialize())
 	}
-	event.context.session = session
-	event.context.user = user
 })
 
 declare module "h3" {

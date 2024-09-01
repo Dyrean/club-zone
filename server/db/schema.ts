@@ -6,8 +6,8 @@ import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core"
  */
 export const userTable = sqliteTable("user", {
 	id: text("id").notNull().primaryKey(),
-	email: text("email", { length: 255 }).notNull(),
-	username: text("username").notNull(),
+	email: text("email", { length: 255 }).notNull().unique(),
+	username: text("username").notNull().unique(),
 	hashedPassword: text("hashed_password").notNull(),
 	createdAt: integer("createdAt", { mode: "timestamp_ms" })
 		.$default(() => new Date())
@@ -24,7 +24,7 @@ export const sessionTable = sqliteTable("session", {
 	id: text("id").notNull().primaryKey(),
 	userId: text("user_id")
 		.notNull()
-		.references(() => userTable.id),
+		.references(() => userTable.id, { onDelete: "cascade" }),
 	ip: text("ip"),
 	expiresAt: integer("expires_at").notNull(),
 })

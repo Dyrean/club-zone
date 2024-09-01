@@ -1,75 +1,72 @@
-# Nuxt 3 Minimal Starter
+# Club Zone
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A social platform for club management and event organization.
 
-## Setup
+## TODO List
 
-Make sure to install the dependencies:
+- [ ] Fix server signup errors (500 status code)
+- [ ] Fix server login errors (500 status code)
+- [ ] Implement user profile page
+- [ ] Develop event management system
 
-```bash
-# npm
-npm install
+## Getting Started
 
-# pnpm
-pnpm install
+1. Clone the repository:
 
-# yarn
-yarn install
+   ```sh
+   git clone https://github.com/dyrean/club-zone.git
+   cd club-zone
+   ```
 
-# bun
-bun install
-```
+2. Install dependencies:
 
-## Development Server
+   ```sh
+   bun install
+   ```
 
-Start the development server on `http://localhost:3000`:
+3. Set up environment variables:
+   Create a `.env` file in the root directory and add the following:
 
-```bash
-# npm
-npm run dev
+   ```env
+   TURSO_CONNECTION_URL=your_turso_connection_url
+   TURSO_AUTH_TOKEN=your_turso_auth_token
+   ```
 
-# pnpm
-pnpm run dev
+4. Run database migrations:
 
-# yarn
-yarn dev
+   ```sh
+   bun db:push
+   ```
 
-# bun
-bun run dev
-```
+5. Start the development server:
 
-## Production
+   ```sh
+   bun dev
+   ```
 
-Build the application for production:
+6. Open your browser and navigate to `http://localhost:3000`
 
-```bash
-# npm
-npm run build
+## Features
 
-# pnpm
-pnpm run build
+- User authentication (signup, login, logout)
+- Secure password hashing with Argon2id
+- Database integration with Turso and Drizzle ORM
+- Server-side input validation using Zod
+- Responsive UI with Tailwind CSS and Shadcn UI components
+- State management with Pinia
+- Form handling with VeeValidate
+- Toast notifications for user feedback
 
-# yarn
-yarn build
+## Contributing
 
-# bun
-bun run build
-```
+1. Fork the repository
+2. Create your feature branch: `git checkout -b feature/AmazingFeature`
+3. Commit your changes: `git commit -m 'Add some AmazingFeature'`
+4. Push to the branch: `git push origin feature/AmazingFeature`
+5. Open a pull request
 
-Locally preview production build:
+Please make sure to update tests as appropriate and adhere to the existing coding style.
 
-```bash
-# npm
-npm run preview
+## License
 
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

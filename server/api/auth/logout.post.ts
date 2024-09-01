@@ -1,4 +1,6 @@
-export default eventHandler(async (event) => {
+import type { H3Event } from "h3"
+
+export default defineEventHandler(async (event: H3Event) => {
 	const lucia = useLucia()
 
 	if (!event.context.session) {
@@ -13,4 +15,7 @@ export default eventHandler(async (event) => {
 		"Set-Cookie",
 		lucia.createBlankSessionCookie().serialize(),
 	)
+
+	// eslint-disable-next-line no-console
+	console.info("[INFO] [Auth:Logout] User logged out", { id: event.context.user?.id })
 })

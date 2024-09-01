@@ -9,49 +9,35 @@ export function useAuth() {
 		password: string,
 		confirm: string,
 	) {
-		try {
-			await $fetch("/api/auth/signup", {
-				method: "POST",
-				body: {
-					email,
-					username,
-					password,
-					confirm,
-				},
-			})
-
-			await navigateTo("/")
-		}
-		catch {
-			console.error("Signup Error")
-		}
+		return $fetch("/api/auth/signup", {
+			method: "POST",
+			body: {
+				email,
+				username,
+				password,
+				confirm,
+			},
+		}).then(() => {
+			navigateTo("/login")
+		})
 	}
 
 	async function login(email: string, password: string) {
-		try {
-			await $fetch("/api/auth/login", {
-				method: "POST",
-				body: {
-					email,
-					password,
-				},
-			})
-
-			await navigateTo("/")
-		}
-		catch {
-			console.error("Login Error")
-		}
+		return $fetch("/api/auth/login", {
+			method: "POST",
+			body: {
+				email,
+				password,
+			},
+		}).then(() => {
+			navigateTo("/")
+		})
 	}
 
 	async function logout() {
-		try {
-			await $fetch("/api/auth/logout", { method: "POST" })
-			await navigateTo("/login")
-		}
-		catch {
-			console.error("Logout Error")
-		}
+		await $fetch("/api/auth/logout", { method: "POST" }).finally(() => {
+			navigateTo("/login")
+		})
 	}
 
 	return {
